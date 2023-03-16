@@ -1,6 +1,5 @@
 # Run Node JS Back-End for re-captcha demo application
 
-For API documentation I have used `Swagger`.
 
 ## Requirment
 `NodeJS v16.5+`
