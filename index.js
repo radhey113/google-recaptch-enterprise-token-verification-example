@@ -10,12 +10,16 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 const handleSend = (req, res) => {
-    const secret_key = process.env.RECAPTCHA_SECRET_KEY;
+    const siteKey = process.env.RECAPTCHA_SITE_KEY;
     const token = req.body.token;
-    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${secret_key}&response=${token}`;
+    const url = `https://recaptchaenterprise.googleapis.com/v1/projects/${process.env.PROJECT_NAME}/assessments?key=${process.env.PROJECT_API_KEY}`
 
     fetch(url, {
-        method: 'post'
+        method: 'post',
+        body: JSON.stringify({
+            event: { siteKey, token }
+        }),
+        redirect: 'follow'
     })
         .then(response => response.json())
         .then(google_response => res.json({ google_response }))
